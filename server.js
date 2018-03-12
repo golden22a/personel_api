@@ -17,11 +17,53 @@ app.use(function(req, res, next) {
 
 //basic root route
 app.get('/',function(req,res){
-  console.log('do you stuff here')
+res.json({
+  "documentation_url":"https://github.com/golden22a/personel_api",
+  "base_url":"https://cryptic-reef-80005.herokuapp.com/",
+  "_endpoints":[
+    {
+      "method":"GET",
+      "path":"/api",
+      "description":"describe all availabe endpoints"
+
+    },
+    {
+      "method":"GET",
+      "path":"/api/profile",
+      "description":"gives you more informatiton about who i am and where i am from"
+    },
+    {
+      "method":"GET",
+      "path":"/api/projects",
+      "descriptions":"information about my previous projects"
+    },
+    {
+    "method":"POST",
+    "path":"/api/projects",
+    "description":"create a new project"
+  },
+  {
+    "method":"GET",
+    "path":"api/projects/:project_id",
+    "description":"show more information about a single project"
+  },
+  {
+    "method":"PUT",
+    "path":"/api/porjects/:project_id",
+    "description":"update a single project"
+  },
+  {
+    "method":"DELETE",
+    "path":"/api/projects/:project_id",
+    "description":"delete a single project"
+  }
+
+]
+});
   });
 
 
 
-app.listen(3000,function(){
+app.listen(process.env.PORT || 3000,function(){
   console.log('server running');
 });
