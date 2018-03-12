@@ -148,7 +148,27 @@ res.json({
 });
 });
 
+app.get('/api/profile',function(req,res){
+res.status(200).json({"name":"Abdelhalim Khaldi",
+"githubUsername":"golden22a",
+"githubLink":"https://github.com/golden22a",
+"personalSiteLink":"golden22a.github.io",
+"currentCity":"San Francisco",
+"things_i_love":[
+  {
+    "name":"chocolate",
+    "description":"just chocolate"
+  },{
+    "name":"traveling",
+    "description":"i love to travel"
+  },{
+    "name":"Dj",
+    "description":"I hate DJ"
+  }
+]
 
+})
+});
 
 app.listen(process.env.PORT || 3000,function(){
   console.log('server running');
