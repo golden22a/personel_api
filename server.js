@@ -16,6 +16,9 @@ app.use(function(req, res, next) {
 });
 
 //basic root route
+app.get('/',function(res,req){
+  req.json({"message":"hey this route doesn't exist try /api x)"});
+});
 app.get('/api',function(req,res){
 res.json({
   "documentation_url":"https://github.com/golden22a/personel_api",
