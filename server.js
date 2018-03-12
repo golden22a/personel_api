@@ -71,7 +71,7 @@ res.json({
         throw err;
       }else{
 
-    res.json({"projects":all,"env":process.env.MONGODB_URI});
+    res.json({"projects":all});
   }
     });
   });
