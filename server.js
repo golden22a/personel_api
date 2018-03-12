@@ -70,7 +70,8 @@ res.json({
         res.json({"message":"ops"});
         throw err;
       }else{
-    res.json(all);
+
+    res.json({"projects":all,"env":process.env.MONGODB_URI});
   }
     });
   });
