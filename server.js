@@ -2,7 +2,6 @@ var express=require('express');
 var app=express();
 var db=require('./models/index.js');
 var bodyParser = require('body-parser');
-
 // Configure app
 app.set('views', __dirname + '/views');      // Views directory
 app.use(express.static('public'));          // Static directory
@@ -65,16 +64,89 @@ res.json({
 });
   });
   app.get('/api/projects',function(req,res){
-    projects=db.Projects.find({},function(err,all){
+    db.Projects.find({},function(err,all){
       if(err){
-        res.json({"message":"ops"});
-        throw err;
+        res.status(500).json(err);
+
       }else{
 
-    res.json({"projects":all});
+    res.status(200).json({"projects":all});
   }
     });
   });
+  app.post('/api/projects',function(req,res){
+    console.log(req.body.name);
+    var name=req.body.name || '';
+    var description=req.body.description || '';
+    var github_url=req.body.github_url || '';
+    var deploy_url=req.body.deploy_url || 'Not deployed yet';
+    var team_mates=req.body.team_mates || 'Individual project';
+    if(name == '' || description == '' || github_url == ''){
+      res.status(500).json({'message':'you need to specifie name,description and the github url'});
+    }
+    else{
+      db.Projects.create({"name":name,"description":description,"github_url":github_url,"deploy_url":deploy_url,"team_mates":team_mates},function(err,added){
+        if(err){
+          res.status(500).json(err);
+        }else{
+
+      res.status(200).json({"project_added":added});
+      }
+    });
+  }
+
+  });
+  app.get('/api/projects/:project_id',function(req,res){
+    var id=req.params.project_id;
+    db.Projects.findById(id,function(err,project){
+      if(err){
+        res.status(500).json({"project":"project not found "});
+      }else{
+
+    res.status(200).json({"project":project});
+    }
+    });
+  });
+  app.put('/api/projects/:project_id',function(req,res){
+    var id=req.params.project_id;
+    db.Projects.findById(id,function(err,project){
+      if(err){
+        res.status(500).json({"project":"project not found "});
+      }else{
+       project.name=req.body.name || project.name;
+         project.describtion=req.body.description || project.describtion;
+        project.github_url=req.body.github_url || project.github_url;
+        project.deploy_url=req.body.deploy_url || project.deploy_url;
+        project.team_mates=req.body.team_mates || project.team_mates;
+        project.save(function(err,saved){
+          if(err){
+            res.status(500).json({"project":"project couldn't be saved "});
+          }else{
+          res.status(200).json({"project":project});
+        }
+      });
+
+    }
+    });
+  });
+  app.delete('/api/projects/:project_id',function(req,res){
+    var id=req.params.project_id;
+    console.log(id);
+    db.Projects.findById(id,function(err,project){
+      if(err){
+        console.log(err);
+        res.status(500).json({"project":"project not found "});
+      }else{
+        project.remove(function(err,deleted){
+          if(err){
+            res.status(500).json({"project":"project couldn't be deleted "});
+          }else{
+          res.status(200).json({"deleted":project});
+        }
+      });
+  }
+});
+});
 
 
 

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+console.log(mongoose.connection.readyState);  
 ProjectsSchema = new Schema({
 name:String,
 description:String,

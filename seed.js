@@ -8,6 +8,13 @@ for(var i=0;i<10;i++){
     'github_url':Faker.internet.url(),
     'deploy_url':Faker.internet.url(),
     'team_mates':[Faker.name.findName(),Faker.name.findName(),Faker.name.findName()]
+  },function(err,done){
+    if(err){
+      console.log(err);
+      throw err;
+    }
+    console.log(done);
   });
 }
+console.log
 process.exit(1);
