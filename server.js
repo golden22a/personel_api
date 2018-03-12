@@ -67,7 +67,7 @@ res.json({
   app.get('/api/projects',function(req,res){
     projects=db.Projects.find({},function(err,all){
       if(err){
-        res.json("message":"ops");
+        res.json({"message":"ops"});
         throw err;
       }else{
     res.json(all);
