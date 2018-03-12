@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
 });
 
 //basic root route
-app.get('/',function(req,res){
+app.get('/api',function(req,res){
 res.json({
   "documentation_url":"https://github.com/golden22a/personel_api",
   "base_url":"https://cryptic-reef-80005.herokuapp.com/",
@@ -61,6 +61,7 @@ res.json({
 ]
 });
   });
+  app.get('/')
 
 
 
