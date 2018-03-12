@@ -64,7 +64,14 @@ res.json({
 ]
 });
   });
-  app.get('/')
+  app.get('/api/projects',function(req,res){
+    projects=db.Projects.find({},function(err,all){
+      if(err){
+        throw err;
+      }
+    res.json(all);
+    });
+  });
 
 
 
