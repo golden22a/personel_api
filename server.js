@@ -64,7 +64,9 @@ res.json({
 });
   });
   app.get('/api/projects',function(req,res){
-    db.Projects.find({},function(err,all){
+    db.Projects.find()
+    .populate('team_mates')
+    .exec(function(err,all){
       if(err){
         res.status(500).json(err);
 
@@ -81,11 +83,12 @@ res.json({
     var github_url=req.body.github_url || '';
     var deploy_url=req.body.deploy_url || 'Not deployed yet';
     var team_mates=req.body.team_mates || 'Individual project';
+    var screenshots=req.body.screenshots || '';
     if(name == '' || description == '' || github_url == ''){
       res.status(500).json({'message':'you need to specifie name,description and the github url'});
     }
     else{
-      db.Projects.create({"name":name,"description":description,"github_url":github_url,"deploy_url":deploy_url,"team_mates":team_mates},function(err,added){
+      db.Projects.create({"name":name,"description":description,"github_url":github_url,"deploy_url":deploy_url,"team_mates":team_mates,"screenshot":screenshots},function(err,added){
         if(err){
           res.status(500).json(err);
         }else{
@@ -118,6 +121,7 @@ res.json({
         project.github_url=req.body.github_url || project.github_url;
         project.deploy_url=req.body.deploy_url || project.deploy_url;
         project.team_mates=req.body.team_mates || project.team_mates;
+        project.screenshots=req.body.screenshots || project.screenshots;
         project.save(function(err,saved){
           if(err){
             res.status(500).json({"project":"project couldn't be saved "});
